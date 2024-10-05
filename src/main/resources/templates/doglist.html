@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BarkBuddy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+    <h1>Dog List</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+        </tr>
+        <tr th:each = "dog : ${dogs}">
+            <td th:text="${dog.name}"></td>
+        </tr>
+    </table>
+         	
+</body>
+</html>
