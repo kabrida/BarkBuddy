@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import syksy2024.backend.model.Breed;
 import syksy2024.backend.model.Dog;
+import syksy2024.backend.repository.BreedRepository;
 import syksy2024.backend.repository.DogRepository;
 import syksy2024.backend.service.BreedService;
 
@@ -31,25 +32,13 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(DogRepository dogRepository, BreedService breedService) {
+	public CommandLineRunner initData(DogRepository dogRepository, BreedRepository breedRepository) {
 		return args -> {
-
-		Breed[] breeds = breedService.findAllBreeds();
-
-		if (breeds != null && breeds.length > 0) {
-		
-		Dog d1 = new Dog("Possu", breeds[0].getName(), LocalDate.of(2016, 1, 13), null);
-		Dog d2 = new Dog("Riesu", breeds[1].getName(), LocalDate.of(2022, 1, 1), null);
-		
-		dogRepository.save(d1);
-		dogRepository.save(d2);
-
-		log.info("Created some dogs");
-		log.info(d1.toString());
-            log.info(d2.toString());
-		} else {
-            log.warn("No breeds found");
-        }
+			Long breedId = 12L;
+			Breed breed = breedRepository.findById(breedId).orElse(null);
+			Dog dog = new Dog("Possu", breed, LocalDate.of(2016, 1, 13), null);
+			log.info("Saved dog: " + dog.toString());
+			dogRepository.save(dog);
 
 		};
 	}

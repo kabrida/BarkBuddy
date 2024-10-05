@@ -19,7 +19,10 @@ public class Dog {
 
     private String name;
 
-    private String breed;
+    @ManyToOne
+    @JoinColumn(name = "breed_id")
+    private Breed breed;
+
     private LocalDate dateOfBirth;
 
     @ManyToOne
@@ -29,7 +32,7 @@ public class Dog {
     public Dog() {
     }
 
-    public Dog(String name, String breed, LocalDate dateOfBirth, Owner owner) {
+    public Dog(String name, Breed breed, LocalDate dateOfBirth, Owner owner) {
         this.name = name;
         this.breed = breed;
         this.dateOfBirth = dateOfBirth;
@@ -52,11 +55,11 @@ public class Dog {
         this.name = name;
     }
 
-    public String getBreed() {
+    public Breed getBreed() {
         return breed;
     }
 
-    public void setBreed(String breed) {
+    public void setBreed(Breed breed) {
         this.breed = breed;
     }
 

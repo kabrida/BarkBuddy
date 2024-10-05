@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import jakarta.annotation.PostConstruct;
 import syksy2024.backend.model.Breed;
+import syksy2024.backend.repository.BreedRepository;
 
 @Service
 public class BreedService {
@@ -21,6 +23,9 @@ public class BreedService {
 
     @Autowired
     private RestTemplate template = new RestTemplate();
+
+    @Autowired
+    private BreedRepository breedRepository;
 
     public Breed[] findAllBreeds() {
         HttpHeaders headers = new HttpHeaders();
@@ -37,7 +42,15 @@ public class BreedService {
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
-            throw new RuntimeException("API kutsu epäonnistui: " + response.getStatusCode());
+            throw new RuntimeException("API call failed: " + response.getStatusCode());
+        }
+    }
+
+    @PostConstruct
+    public void init() {
+        Breed[] breedsFromApi = findAllBreeds();
+        for (Breed breed : breedsFromApi) {
+            breedRepository.save(breed);
         }
     }
     
