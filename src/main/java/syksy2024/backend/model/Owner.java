@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class Owner {
     private String lastName;
     private LocalDate dateOfBirth;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     @JsonIgnore
     private List<Dog> dogs;
 
