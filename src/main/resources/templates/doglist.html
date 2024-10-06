@@ -3,18 +3,32 @@
 <head>
     <title>BarkBuddy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" href="/bootstrap.min.css" th:href="@{/bootstrap.min.css}" />
 </head>
 <body>
-    <h1>Dog List</h1>
-    <table>
+    <div class="container">
+        <div class="col-md-4 text-center">
+    <h1 class="mb-4">BarkBuddy</h1>
+    </div>
+    <div class="row d-flex justify-content-between align-items-center" style="padding: 20px 0;">
+    </div>
+</div>
+    <table CLASS="table table-hover">
         <tr>
             <th>Name</th>
+            <th>Breed</th>
+            <th>Date of Birth</th>
+            <th>Owner</th>
         </tr>
         <tr th:each = "dog : ${dogs}">
             <td th:text="${dog.name}"></td>
+            <td th:text="${dog.breed.name}"></td>
+            <td th:text="${#temporals.format(dog.dateOfBirth, 'dd.MM.yyyy')}"></td>
+            <td th:text="${dog?.owner?.firstName != null ? dog?.owner?.firstName : 'Unknown'}"></td>
+            <td><a th:href="@{/delete/{id}(id=${dog.id})}" class="btn btn-danger">Delete</a></td>
+            <td><a th:href="@{/edit/{id}(id=${dog.id})}" class="btn btn-info">Edit</a></td>
         </tr>
     </table>
-         	
+    <a href="/add" class="btn btn-success">Add Dog</a>  	
 </body>
 </html>

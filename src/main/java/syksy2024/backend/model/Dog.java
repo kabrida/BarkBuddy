@@ -8,6 +8,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Dog {
@@ -16,13 +19,16 @@ public class Dog {
     private Long id;
 
  
-
+    @NotNull(message = "Name is required")
+    @Size(min = 1, max = 100, message = "Name must be between 1 and 50 characters")
     private String name;
 
+    @NotNull(message = "Breed is required")
     @ManyToOne
     @JoinColumn(name = "breed_id")
     private Breed breed;
 
+    @PastOrPresent(message = "Date of birth cannot be in the future")
     private LocalDate dateOfBirth;
 
     @ManyToOne

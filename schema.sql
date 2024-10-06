@@ -17,5 +17,5 @@ CREATE TABLE dog (
     name VARCHAR(100) NOT NULL,
     breed_id INTEGER REFERENCES breed(id) ON DELETE CASCADE,
     owner_id INTEGER REFERENCES owner(id) ON DELETE CASCADE,
-    birth_date DATE NOT NULL
+    date_of_birth DATE NOT NULL
 );

@@ -32,14 +32,15 @@ public class BackendApplication {
 	}
 
 	@Bean
-	public CommandLineRunner initData(DogRepository dogRepository, BreedRepository breedRepository) {
+	public CommandLineRunner dogDemo(DogRepository dogRepository, BreedRepository breedRepository) {
 		return args -> {
+			/* Demokoiran lisääminen ennen ulkoista tietokantaa
 			Long breedId = 12L;
-			Breed breed = breedRepository.findById(breedId).orElse(null);
+			Breed breed = breedRepository.findById(breedId).orElse(null); 
 			Dog dog = new Dog("Possu", breed, LocalDate.of(2016, 1, 13), null);
 			log.info("Saved dog: " + dog.toString());
 			dogRepository.save(dog);
-
+			*/
 		};
 	}
 

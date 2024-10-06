@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BarkBuddy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/bootstrap.min.css" th:href="@{/bootstrap.min.css}" />
+</head>
+<body>
+    <div class="container">
+    <h1 class="mb-4">Add dog to BarkBuddy</h1>
+    <form th:object="${dog}" th:action="@{/save}" action="#" method="post">
+        <div class="mb-2">
+			<label for="name">Name</label>
+			<input type="text" id="name" th:field="*{name}" class="form-control form-control-sm" />
+			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
+		</div>
+		<div class="mb-2">
+            <label for="dateOfBirth">Date of Birth</label>
+			<input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" class="form-control form-control-sm" />
+			<div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Error</div>
+		</div>
+		<div class="mb-2">
+			<label for="breed">Breed</label>
+		  <select class="form-control" id="breed" th:field="*{breed}">
+			<option value="" selected>-- Select Breed --</option>
+			<option th:each="breed: ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
+		  </select>
+	  </div>
+      <div class="mb-2">
+        <label for="owner">Owner</label>
+        <select class="form-control" id="owner" th:field="*{owner}">
+            <option value="" selected>-- Select Owner --</option>
+            <option th:each="owner : ${owners}" th:value="${owner.id}" th:text="${owner.firstName} + ' ' + ${owner.lastName}"></option>
+        </select>
+    </div>
+			<input type="submit" value="Save" class="btn btn-primary"></input>
+            <a href="/barkbuddy" class="btn btn-secondary">Return</a>
+		</form>
+	</div>
+</body>
+</html>

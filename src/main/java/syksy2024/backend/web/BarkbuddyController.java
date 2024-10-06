@@ -28,13 +28,13 @@ public class BarkbuddyController {
     @Autowired
     private OwnerRepository ownerRepository;
 
-    @RequestMapping({"/", "/dogs"})
+    @RequestMapping({"/", "/barkbuddy"})
     public String showDogs(Model model) {
         model.addAttribute("dogs", dogRepository.findAll());
         return "doglist";
     }
 
-    @PostMapping("/add")
+    @RequestMapping(value = "/add")
     public String addDog(Model model) {
         model.addAttribute("dog", new Dog());
         model.addAttribute("owners", ownerRepository.findAll());
@@ -43,7 +43,7 @@ public class BarkbuddyController {
     }
 
     @PostMapping("/save")
-    public String saveDog(@ModelAttribute("dogs") Dog dog, BindingResult bindingResult, Model model) {
+    public String saveDog(@ModelAttribute("dog") Dog dog, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             System.out.println("Error: " + dog);
             model.addAttribute("dog", dog);
@@ -52,13 +52,13 @@ public class BarkbuddyController {
             return "adddog";        
         }
         dogRepository.save(dog);
-        return "redirect:dogs";
+        return "redirect:/barkbuddy";
     }
 
     @GetMapping("/delete/{id}")
     public String deleteDog(@PathVariable("id") Long id, Model model) {
     	dogRepository.deleteById(id);
-        return "redirect:/dogs";
+        return "redirect:/barkbuddy";
     }   
 
     @GetMapping("edit/{id}")
