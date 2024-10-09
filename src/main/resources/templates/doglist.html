@@ -16,12 +16,14 @@
     <table CLASS="table table-hover">
         <tr>
             <th>Name</th>
+            <th>Registration number</th>
             <th>Breed</th>
             <th>Date of Birth</th>
             <th>Owner</th>
         </tr>
         <tr th:each = "dog : ${dogs}">
             <td th:text="${dog.name}"></td>
+            <td th:text="${dog.regNum}"></td>
             <td th:text="${dog.breed.name}"></td>
             <td th:text="${#temporals.format(dog.dateOfBirth, 'dd.MM.yyyy')}"></td>
             <td th:text="${dog?.owner?.firstName != null ? dog?.owner?.firstName : 'Unknown'}"></td>

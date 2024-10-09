@@ -20,6 +20,11 @@
 			<div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Error</div>
 		</div>
 		<div class="mb-2">
+			<label for="regNum">Registration number</label>
+			<input type="text" id="regNum" th:field="*{regNum}" class="form-control form-control-sm" />
+			<div th:if="${#fields.hasErrors('regNum')}" th:errors="*{regNum}">Error</div>
+		</div>
+		<div class="mb-2">
 			<label for="breed">Breed</label>
 		  <select class="form-control" id="breed" th:field="*{breed}">
 			<option value="" selected>-- Select Breed --</option>

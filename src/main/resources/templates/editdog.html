@@ -12,29 +12,33 @@
             <input type="hidden" th:field="*{id}" />
             <div class="mb-3">
                 <label for="name">Name</label>
-			<input type="text" id="name" th:field="*{name}" class="form-control form-control-sm" />
-			<div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
-		</div>
-		<div class="mb-2">
-            <label for="dateOfBirth">Date of Birth</label>
-			<input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" class="form-control form-control-sm" 
-            th:value="${dateOfBirth}" />
-			<div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Error</div>
-		</div>
-		<div class="mb-2">
-			<label for="breed">Breed</label>
-		  <select class="form-control" id="breed" th:field="*{breed}">
-			<option value="" selected>-- Select Breed --</option>
-			<option th:each="breed: ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
-		  </select>
-	  </div>
-      <div class="mb-2">
-        <label for="owner">Owner</label>
-        <select class="form-control" id="owner" th:field="*{owner}">
-            <option value="" selected>-- Select Owner --</option>
-            <option th:each="owner : ${owners}" th:value="${owner.id}" th:text="${owner.firstName} + ' ' + ${owner.lastName}"></option>
-        </select>
-    </div>
+                <input type="text" id="name" th:field="*{name}" class="form-control form-control-sm" />
+                <div th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}">Error</div>
+            </div>
+            <div class="mb-2">
+                <label for="dateOfBirth">Date of Birth</label>
+                <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" class="form-control form-control-sm" />
+                <div th:if="${#fields.hasErrors('dateOfBirth')}" class="text-danger" th:errors="*{dateOfBirth}">Error</div>
+            </div>
+            <div class="mb-2">
+                <label for="regNum">Registration number</label>
+                <input type="text" id="regNum" th:field="*{regNum}" class="form-control form-control-sm" />
+                <div th:if="${#fields.hasErrors('regNum')}" class="text-danger" th:errors="*{regNum}">Error</div>
+            </div>
+            <div class="mb-2">
+                <label for="breed">Breed</label>
+                <select class="form-control" id="breed" th:field="*{breed}">
+                    <option value="" selected>-- Select Breed --</option>
+                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
+                </select>
+            </div>
+            <div class="mb-2">
+                <label for="owner">Owner</label>
+                <select class="form-control" id="owner" th:field="*{owner}">
+                    <option value="" selected>-- Select Owner --</option>
+                    <option th:each="owner : ${owners}" th:value="${owner.id}" th:text="${owner.firstName} + ' ' + ${owner.lastName}"></option>
+                </select>
+            </div>
             <button type="submit" class="btn btn-primary">Save</button>
             <a href="/barkbuddy" class="btn btn-secondary">Return</a>
         </form>
