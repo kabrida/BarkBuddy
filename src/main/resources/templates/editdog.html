@@ -8,7 +8,7 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Edit Dog</h1>
-        <form th:object="${edit}" th:action="@{/save}" method="post">
+        <form th:object="${dog}" th:action="@{/save}" method="post">
             <input type="hidden" th:field="*{id}" />
             <div class="mb-3">
                 <label for="name">Name</label>
@@ -27,14 +27,14 @@
             </div>
             <div class="mb-2">
                 <label for="breed">Breed</label>
-                <select class="form-control" id="breed" th:field="*{breed}">
+                <select class="form-control" id="breed" th:field="*{breed}" th:options="${breeds}" th:optionLabel="name" th:optionValue="id">
                     <option value="" selected>-- Select Breed --</option>
-                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
+                    <option th:each="breed: ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
                 </select>
             </div>
             <div class="mb-2">
                 <label for="owner">Owner</label>
-                <select class="form-control" id="owner" th:field="*{owner}">
+                <select class="form-control" id="owner" th:field="*{owner}" th:options="${owners}" th:optionLabel="name" th:optionValue="id">
                     <option value="" selected>-- Select Owner --</option>
                     <option th:each="owner : ${owners}" th:value="${owner.id}" th:text="${owner.firstName} + ' ' + ${owner.lastName}"></option>
                 </select>

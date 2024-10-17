@@ -134,7 +134,7 @@ public class Owner {
     @Override
     public String toString() {
         return "Owner [id=" + id + ", username=" + username + ", passwordHash=" + passwordHash + ", firstName="
-                + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth + ", dogs=" + dogs + ", role="
+                + firstName + ", lastName=" + lastName + ", dateOfBirth=" + dateOfBirth  + ", role="
                 + role + "]";
     }
 

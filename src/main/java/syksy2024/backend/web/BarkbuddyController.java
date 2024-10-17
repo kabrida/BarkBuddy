@@ -1,5 +1,7 @@
 package syksy2024.backend.web;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -63,10 +65,16 @@ public class BarkbuddyController {
 
     @GetMapping("edit/{id}")
     public String editDog(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("edit", dogRepository.findById(id));
+        Optional<Dog> optionalDog = dogRepository.findById(id);
+            if (optionalDog.isPresent()) {
+        model.addAttribute("dog", optionalDog.get());
         model.addAttribute("owners", ownerRepository.findAll());
         model.addAttribute("breeds", breedService.findAllBreeds());
         return "editdog";
+            } else {
+        model.addAttribute("error", "Dog not found with ID: " + id);
+        return "redirect:/barkbuddy";
+    }
     }
     
     
