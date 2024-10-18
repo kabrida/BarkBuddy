@@ -40,3 +40,15 @@ INSERT INTO dog (dog_name, breed_id, reg_num, dog_dob, owner_id) VALUES
 SELECT * FROM owner;
 SELECT * FROM breed;
 SELECT * FROM dog;
+
+-- LISÄTÄÄN TIETOJA BREED TAULUUN
+
+ALTER TABLE breed
+ADD COLUMN bred_for VARCHAR(255),
+ADD COLUMN breed_group VARCHAR(255),
+ADD COLUMN life_span VARCHAR(50),
+ADD COLUMN temperament VARCHAR(500),
+ADD COLUMN origin VARCHAR(500),
+ADD COLUMN weight_metric VARCHAR(50),
+ADD COLUMN height_metric VARCHAR(50),
+ADD COLUMN reference_image_id VARCHAR(255);

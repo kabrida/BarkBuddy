@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>BarkBuddy - Breed Info</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <style>
+        .breed-image {
+            width: 600px;
+            height: auto;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">BarkBuddy</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/barkbuddy">View Dogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/breed-info">Breed Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/owner-management" sec:authorize="hasAuthority('ADMIN')">Owner Management</a>
+                    </li>
+                </ul>
+                <form class="d-flex" th:action="@{/logout}" method="post" style="margin-left:auto;">
+                    <input class="btn btn-outline-danger" type="submit" value="Sign Out" />
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5 pb-5" style="padding-top: 70px;">
+        <h1 class="text-center">Learn about dog breeds</h1>
+        <form th:action="@{/breed-info}" method="get">
+            <div class="mt-4 mb-3">
+                <select class="form-control" id="breed" name="breedId">
+                    <option value="" selected>-- Select Breed --</option>
+                    <option th:each="breed : ${breeds}" th:value="${breed.id}" th:text="${breed.name}"></option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+        <div th:if="${breed}" class="mt-4">
+            <h2 th:text="${breed.name}">Breed Name</h2>
+            <img th:src="${breed.getImageUrl()}" alt="Breed Image" class="breed-image" />
+            <div th:if="${breed.bredFor}" class="mt-3">
+                <strong>Typically Used For:</strong> <span th:text="${breed.bredFor}"></span>
+            </div>
+            <div th:if="${breed.breedGroup}" class="mt-3">
+                <strong>Breed Group:</strong> <span th:text="${breed.breedGroup}"></span>
+            </div>
+            <div th:if="${breed.lifeSpan}" class="mt-3">
+                <strong>Expexted Lifespan:</strong> <span th:text="${breed.lifeSpan}"></span>
+            </div>
+            <div th:if="${breed.temperament}" class="mt-3">
+                <strong>Personality:</strong> <span th:text="${breed.temperament}"></span>
+            </div>
+            <div th:if="${breed.origin}" class="mt-3">
+                <strong>Origin:</strong> <span th:text="${breed.origin}"></span>
+            </div>
+            <div th:if="${breed.weight.metric}" class="mt-3">
+                <strong>Weight:</strong> <span th:text="${breed.weight.metric}"></span> kg
+            </div>
+            <div th:if="${breed.height.metric}" class="mt-3">
+                <strong>Height:</strong> <span th:text="${breed.height.metric}"></span> cm
+        </div>
+    </div>
+        
+</body>
+</html>

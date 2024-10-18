@@ -1,4 +1,4 @@
-package syksy2024.backend;
+package syksy2024.backend.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -16,7 +16,10 @@ import syksy2024.backend.web.UserDetailServiceImpl;
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 @EnableWebSecurity
-public class BarkbuddySecurityConfig {
+public class BarkbuddySecurityConfig  {
+
+    @Autowired
+    private CustomLogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired
     private UserDetailServiceImpl userDetailsService;
@@ -28,6 +31,8 @@ public class BarkbuddySecurityConfig {
             .requestMatchers(antMatcher("/css/**")).permitAll()
             .requestMatchers(antMatcher("/signup")).permitAll()
             .requestMatchers(antMatcher("/saveowner")).permitAll()
+            .requestMatchers(antMatcher("/breeds")).permitAll()
+            .requestMatchers(antMatcher("/dogs")).permitAll()
 				.anyRequest().authenticated()
 			)
             .headers(headers -> headers
@@ -39,6 +44,7 @@ public class BarkbuddySecurityConfig {
 				.defaultSuccessUrl("/home", true).permitAll()
 			)
             .logout(logout -> logout
+            .logoutSuccessHandler(logoutSuccessHandler)
 				.permitAll()
 			);
 		return http.build();

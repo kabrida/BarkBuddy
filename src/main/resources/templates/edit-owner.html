@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <title>BarkBuddy - Edit Owner</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Edit Owner</h1>
+        <form th:object="${owner}" th:action="@{/owner/save}" method="post">
+            <input type="hidden" th:field="*{id}" />
+            <div class="mb-2">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" th:field="*{firstName}" class="form-control form-control-sm" />
+                <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}">Error</div>
+            </div>
+            <div class="mb-2">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" th:field="*{lastName}" class="form-control form-control-sm" />
+                <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}">Error</div>
+            </div>
+            <div class="mb-2">
+                <label for="role">User Role</label>
+                <select id="role" th:field="*{role}" class="form-control form-control-sm" required>
+                    <option value="" disabled selected>Select role</option>
+                    <option value="USER">USER</option>
+                    <option value="ADMIN">ADMIN</option>
+                </select>
+                <div th:if="${#fields.hasErrors('role')}" class="text-danger" th:errors="*{role}">Error</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a href="/owner-management" class="btn btn-secondary">Return</a>
+        </form>
+    </div>
+</body>
+</html>

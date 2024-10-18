@@ -1,6 +1,7 @@
 package syksy2024.backend.web;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,8 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 
+import syksy2024.backend.model.Breed;
 import syksy2024.backend.model.Dog;
 import syksy2024.backend.model.Owner;
+import syksy2024.backend.repository.BreedRepository;
 import syksy2024.backend.repository.DogRepository;
 import syksy2024.backend.repository.OwnerRepository;
 import syksy2024.backend.service.BreedService;
@@ -23,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -35,6 +39,9 @@ public class BarkbuddyController {
 
     @Autowired
     private OwnerRepository ownerRepository;
+
+    @Autowired
+    private BreedRepository breedRepository;
 
 
     @RequestMapping({"/", "/index"})
@@ -53,6 +60,21 @@ public class BarkbuddyController {
         model.addAttribute("owner", owner);
         model.addAttribute("dogs", dogRepository.findAll());
         return "doglist";
+    }
+
+    @GetMapping("/breed-info")
+    public String getBreedInfo(@RequestParam(value = "breedId", required = false) Long breedId, Model model) {
+        Breed[] breedsArray = breedService.findAllBreeds();
+        List<Breed> breeds = Arrays.asList(breedsArray);
+        model.addAttribute("breeds", breeds);
+
+        if (breedId != null) {
+            Breed breed = breedRepository.findById(breedId).orElse(null);
+            model.addAttribute("breed", breed);
+        }
+
+
+        return "breed-info";
     }
 
     @RequestMapping(value = "/add")
@@ -110,7 +132,7 @@ public class BarkbuddyController {
         return "redirect:/barkbuddy";
     }
     }
-    
+
     
 
 }

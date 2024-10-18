@@ -13,6 +13,8 @@ import org.springframework.web.client.RestTemplate;
 
 import jakarta.annotation.PostConstruct;
 import syksy2024.backend.model.Breed;
+import syksy2024.backend.model.Height;
+import syksy2024.backend.model.Weight;
 import syksy2024.backend.repository.BreedRepository;
 
 @Service
@@ -51,8 +53,15 @@ public class BreedService {
     public void init() {
         Breed[] breedsFromApi = findAllBreeds();
         for (Breed breed : breedsFromApi) {
-            breedRepository.save(breed);
+            // Tarkista, onko breed jo olemassa tietokannassa
+            if (breedRepository.existsById(breed.getId())) {
+                // Jos breed on jo olemassa, päivitä se
+                breedRepository.save(breed); // tämä päivittää olemassa olevan
+            } else {
+                // Jos breed ei ole olemassa, tallenna se uutena
+                breedRepository.save(breed);
+            }
         }
-    }
     
+    }
 }

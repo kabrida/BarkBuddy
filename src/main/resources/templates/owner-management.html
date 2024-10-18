@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
 xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
-    <title>BarkBuddy</title>
+    <title>BarkBuddy - Owner Management</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
@@ -37,31 +37,24 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <div class="container" style="padding-top: 70px;">
         <div class="col-md-4 text-center">
     </div>
-    <div class="row d-flex justify-content-between align-items-center" style="padding: 20px 0;">
-        <div class="col-md-4 text-center">
-            <span>Welcome to BarkBuddy <span th:text="${owner.firstName} + ' ' + ${owner.lastName}"></span></span>
-    </div>
-    </div>
 </div>
     <table CLASS="table table-hover">
         <tr>
-            <th>Name</th>
-            <th>Registration number</th>
-            <th>Breed</th>
+            <th>Username</th>
+            <th>First Name</th>
+            <th>Last Name</th>
             <th>Date of Birth</th>
-            <th>Owner</th>
+            <th>Role</th>
             <th sec:authorize="hasAuthority('ADMIN')"></th>
         </tr>
-        <tr th:each = "dog : ${dogs}">
-            <td th:text="${dog.name}"></td>
-            <td th:text="${dog.regNum}"></td>
-            <td th:text="${dog.breed.name}"></td>
-            <td th:text="${#temporals.format(dog.dateOfBirth, 'dd.MM.yyyy')}"></td>
-            <td th:text="${dog?.owner?.firstName != null ? dog?.owner?.firstName + ' ' + dog?.owner?.lastName : 'Unknown'}"></td>
-            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${dog.id})}" class="btn btn-danger">Delete</a></td>
-            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${dog.id})}" class="btn btn-info">Edit</a></td>
+        <tr th:each = "owner : ${owners}">
+            <td th:text="${owner.username}"></td>
+            <td th:text="${owner.firstName}"></td>
+            <td th:text="${owner.lastName}"></td>
+            <td th:text="${#temporals.format(owner.dateOfBirth, 'dd.MM.yyyy')}"></td>
+            <td th:text="${owner.role}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/owner/edit/{id}(id=${owner.id})}" class="btn btn-info">Edit</a></td>
         </tr>
-    </table>
-    <a href="/add" class="btn btn-success">Add Dog</a>  	
+    </table> 	
 </body>
 </html>

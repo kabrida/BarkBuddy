@@ -24,7 +24,7 @@
                         <a class="nav-link" href="/breed-info">Breed Info</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/edit-owners" sec:authorize="hasAuthority('ADMIN')">Owner Management</a>
+                        <a class="nav-link" href="/owner-management" sec:authorize="hasAuthority('ADMIN')">Owner Management</a>
                     </li>
                 </ul>
                 <form class="d-flex" th:action="@{/logout}" method="post" style="margin-left:auto;">
@@ -33,7 +33,7 @@
             </div>
         </div>
     </nav>
-    <div class="container mt-5" style="padding-top: 70px;">
+    <div class="container mt-5 mb-5" style="padding-top: 70px;">
         <h1>Welcome to BarkBuddy</h1>
     <p>BarkBuddy is a comprehensive dog management application that simplifies the process of keeping track of your beloved pets. Whether you are a proud dog owner or a pet enthusiast, this application is designed to meet your needs and help you manage your dogs effectively.</p>
 

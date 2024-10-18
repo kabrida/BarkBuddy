@@ -128,6 +128,9 @@ public class Owner {
     }
 
     public void setRole(String role) {
+        if (!role.equals("USER") && !role.equals("ADMIN")) {
+            throw new IllegalArgumentException("Role must be USER or ADMIN");
+        }
         this.role = role;
     }
 
