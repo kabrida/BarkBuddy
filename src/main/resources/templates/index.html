@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BarkBuddy - Welcome</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+    <div class="container text-center">
+        <h1>Welcome to BarkBuddy</h1>
+        <p>If you already have an account, please <strong>Login</strong>.</p>
+        <p>If you don't have an account yet, feel free to <strong>Sign Up</strong> to create one!</p>
+
+        <div class="mt-4">
+            <a href="/login" class="btn btn-primary btn-lg">Login</a>
+            <a href="/signup" class="btn btn-secondary btn-lg ml-3">Sign Up</a>
+    </div>
+    </div>
+</body>
+</html>

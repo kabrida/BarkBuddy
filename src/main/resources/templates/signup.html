@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>BarkBuddy - Sign Up</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" th:href="@{css/bootstrap.min.css}" />
+</head>
+<body>
+<div class="container mt-5">
+	<h1 class="mb-4">Sign Up to BarkBuddy</h1>
+		<form th:object="${signupform}" th:action="@{/saveowner}" action="#" method="post">
+			<div class="mb-2">
+				<label> Username :<input type="text" th:field="*{username}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username Error</p>	
+			</div>
+			<div class="mb-2">
+				<label> Password :<input type="password" th:field="*{password}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password Error</p>	
+			</div>
+			<div class="mb-2">
+				<label> Re-type Password: <input type="password" th:field="*{passwordCheck}" class="form-control"/></label>
+				<p th:if="${#fields.hasErrors('passwordCheck')}" th:errors="*{passwordCheck}">Password Match Error</p>	
+			</div>
+			<div class="mb-2">
+                <label>First Name: <input type="text" th:field="*{firstName}" class="form-control" /></label>
+                <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">First Name Error</p>
+            </div>
+            <div class="mb-2">
+                <label>Last Name: <input type="text" th:field="*{lastName}" class="form-control" /></label>
+                <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</p>
+            </div>
+            <div class="mb-2">
+                <label>Date of Birth: <input type="date" th:field="*{dateOfBirth}" class="form-control" /></label>
+                <p th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}">Date of Birth Error</p>
+            </div>
+			
+			<input type="submit" class="btn btn-primary" value="Signup"></input>		
+		</form>
+</div>
+</body>
+</html>

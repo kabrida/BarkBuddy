@@ -1,16 +1,46 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>BarkBuddy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" href="/bootstrap.min.css" th:href="@{/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-    <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">BarkBuddy</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/barkbuddy">View Dogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/breed-info">Breed Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/edit-owners" sec:authorize="hasAuthority('ADMIN')">Owner Management</a>
+                    </li>
+                </ul>
+                <form class="d-flex" th:action="@{/logout}" method="post" style="margin-left:auto;">
+                    <input class="btn btn-outline-danger" type="submit" value="Sign Out" />
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="padding-top: 70px;">
         <div class="col-md-4 text-center">
-    <h1 class="mb-4">BarkBuddy</h1>
     </div>
     <div class="row d-flex justify-content-between align-items-center" style="padding: 20px 0;">
+        <div class="col-md-4 text-center">
+            <span>Welcome to BarkBuddy <span th:text="${owner.firstName} + ' ' + ${owner.lastName}"></span></span>
+    </div>
     </div>
 </div>
     <table CLASS="table table-hover">
@@ -20,15 +50,16 @@
             <th>Breed</th>
             <th>Date of Birth</th>
             <th>Owner</th>
+            <th sec:authorize="hasAuthority('ADMIN')"></th>
         </tr>
         <tr th:each = "dog : ${dogs}">
             <td th:text="${dog.name}"></td>
             <td th:text="${dog.regNum}"></td>
             <td th:text="${dog.breed.name}"></td>
             <td th:text="${#temporals.format(dog.dateOfBirth, 'dd.MM.yyyy')}"></td>
-            <td th:text="${dog?.owner?.firstName != null ? dog?.owner?.firstName : 'Unknown'}"></td>
-            <td><a th:href="@{/delete/{id}(id=${dog.id})}" class="btn btn-danger">Delete</a></td>
-            <td><a th:href="@{/edit/{id}(id=${dog.id})}" class="btn btn-info">Edit</a></td>
+            <td th:text="${dog?.owner?.firstName != null ? dog?.owner?.firstName + ' ' + dog?.owner?.lastName : 'Unknown'}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${dog.id})}" class="btn btn-danger">Delete</a></td>
+            <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/edit/{id}(id=${dog.id})}" class="btn btn-info">Edit</a></td>
         </tr>
     </table>
     <a href="/add" class="btn btn-success">Add Dog</a>  	

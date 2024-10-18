@@ -38,10 +38,11 @@ public class BreedService {
             entity,
             Breed[].class
         );
-
+        System.out.println("Status code: " + response.getStatusCode());
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
+            System.out.println("Error message: " + response.getBody());
             throw new RuntimeException("API call failed: " + response.getStatusCode());
         }
     }

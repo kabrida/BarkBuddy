@@ -1,16 +1,17 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <title>BarkBuddy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link type="text/css" rel="stylesheet" th:href="@{/bootstrap.min.css}" />
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Edit Dog</h1>
         <form th:object="${dog}" th:action="@{/save}" method="post">
             <input type="hidden" th:field="*{id}" />
-            <div class="mb-3">
+            <div class="mb-2">
                 <label for="name">Name</label>
                 <input type="text" id="name" th:field="*{name}" class="form-control form-control-sm" />
                 <div th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}">Error</div>

@@ -1,0 +1,64 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Welcome to BarkBuddy</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">BarkBuddy</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/barkbuddy">View Dogs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/breed-info">Breed Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/edit-owners" sec:authorize="hasAuthority('ADMIN')">Owner Management</a>
+                    </li>
+                </ul>
+                <form class="d-flex" th:action="@{/logout}" method="post" style="margin-left:auto;">
+                    <input class="btn btn-outline-danger" type="submit" value="Sign Out" />
+                </form>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-5" style="padding-top: 70px;">
+        <h1>Welcome to BarkBuddy</h1>
+    <p>BarkBuddy is a comprehensive dog management application that simplifies the process of keeping track of your beloved pets. Whether you are a proud dog owner or a pet enthusiast, this application is designed to meet your needs and help you manage your dogs effectively.</p>
+
+    <h2>Features:</h2>
+    <p>Our application offers a variety of features to enhance your experience:</p>
+    <ul>
+        <li>
+            <strong>Add Dogs:</strong> Easily add your dogs to the application by filling in their details such as name, date of birth, registration number, and breed. Keeping all this information in one place makes it convenient for you to manage your pet's profile.
+        </li>
+        <li>
+            <strong>View Dogs:</strong> View a comprehensive list of all the dogs added to the BarkBuddy application. This feature allows you to quickly access essential information about each dog, including their owners, making it easy to learn about various furry friends in the community.        </li>
+            <li>
+                <strong>Breed Info:</strong> Our breed information feature lets you search for specific dog breeds. By entering the breed name, you can retrieve detailed information and images from an external API, <em>The Dog API</em>. We extend our gratitude to The Dog API for providing reliable and comprehensive data, making it easy to learn about various breeds and understand their characteristics, helping you make informed decisions about pet ownership.
+            </li>            
+        <li>
+            <strong>Edit Owners:</strong> For those with administrative access, you have the ability to manage dog owners' information. This feature allows you to update details about the owners, ensuring that all records are accurate and up-to-date.
+        </li>
+    </ul>
+
+    <h2>Why BarkBuddy?</h2>
+    <p>In today's fast-paced world, pet owners often find it challenging to manage their pets' information effectively. BarkBuddy addresses this issue by providing a user-friendly platform where you can store and retrieve important details about your dogs with ease. Our goal is to enhance your experience as a dog owner and promote responsible pet care.</p>
+    
+    <p>We invite you to explore the features of BarkBuddy and enjoy a seamless experience in managing your dogs. Whether you are tracking medical records, planning grooming appointments, or simply wanting to learn more about dog breeds, BarkBuddy is here to assist you every step of the way.</p>
+    
+    <p>Join our community of dog lovers and let BarkBuddy help you provide the best care for your furry companions!</p>
+    </div>
+</body>
+</html>
