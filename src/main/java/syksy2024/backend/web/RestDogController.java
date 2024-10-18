@@ -1,5 +1,6 @@
 package syksy2024.backend.web;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +11,7 @@ import syksy2024.backend.model.Dog;
 import syksy2024.backend.repository.DogRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -39,6 +41,7 @@ public class RestDogController {
     }
     
     @PostMapping("/dogs")
+    @ResponseStatus(HttpStatus.CREATED)
     Dog newDog(@RequestBody Dog newDog) {
         return dRepo.save(newDog);
     }
@@ -54,9 +57,10 @@ public class RestDogController {
 
   
     @DeleteMapping("/dogs/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> deleteDog(@PathVariable("id") Long id) {
         dRepo.deleteById(id);
-        return ResponseEntity.ok("Dog deleted successfully");
+        return ResponseEntity.noContent().build();
     }
     
 
