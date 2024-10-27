@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +32,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.validation.Valid;
 
 
 @Controller
@@ -55,11 +62,38 @@ public class BarkbuddyController {
 }
 
     @RequestMapping(value = "/barkbuddy")
-    public String showDogs(Model model, Principal principal) {
+    public String showDogs(
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(required = false) String breed,
+        @RequestParam(required = false) String ownerName,
+        @RequestParam(defaultValue = "name") String sortBy,
+        Model model,
+        Principal principal) { 
+
+    
         Owner owner = ownerRepository.findByUsername(principal.getName());
-        model.addAttribute("owner", owner);
-        model.addAttribute("dogs", dogRepository.findAll());
-        return "doglist";
+            model.addAttribute("owner", owner);
+
+        // Määritellään sivutuksen asetukset: 10 koiraa per sivu
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sortBy).ascending()); // Lajitellaan valitun kentän mukaan
+
+    // Haetaan koirat suodatettuna
+        Page<Dog> dogPage;
+            if (breed != null && !breed.isEmpty()) {
+                dogPage = dogRepository.findByBreed_Name(breed, pageable); // Suodata rodun mukaan
+            } else if (ownerName != null && !ownerName.isEmpty()) {
+                dogPage = dogRepository.findByOwner_FirstNameContainingOrOwner_LastNameContaining(ownerName, ownerName, pageable); // Suodata omistajan nimen mukaan
+            } else {
+                dogPage = dogRepository.findAll(pageable); // Jos ei suodatusta, hae kaikki koirat
+            }
+
+            model.addAttribute("dogs", dogPage.getContent()); // Koirien lista
+            model.addAttribute("currentPage", page); // Nykyinen sivu
+            model.addAttribute("totalPages", dogPage.getTotalPages()); // Yhteensä sivuja
+            model.addAttribute("breedFilter", breed); // Lisää rodun suodatusparametri malliin
+            model.addAttribute("ownerFilter", ownerName); // Lisää omistajan suodatusparametri malliin
+            model.addAttribute("sortBy", sortBy); // Lisää lajitteluparametri malliin
+            return "doglist";
     }
 
     @GetMapping("/breed-info")
@@ -99,16 +133,26 @@ public class BarkbuddyController {
     }
 
     @PostMapping("/save")
-    public String saveDog(@ModelAttribute("dog") Dog dog, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            System.out.println("Error: " + dog);
-            model.addAttribute("dog", dog);
-            model.addAttribute("owners", ownerRepository.findAll());
-            model.addAttribute("breeds", breedService.findAllBreeds());
-            return "adddog";        
-        }
+    public String saveDog(@Valid @ModelAttribute("dog") Dog dog, BindingResult bindingResult, Model model) {
+    if (bindingResult.hasErrors()) {
+        System.out.println("Error: " + dog);
+        model.addAttribute("dog", dog);
+        model.addAttribute("owners", ownerRepository.findAll());
+        model.addAttribute("breeds", breedService.findAllBreeds());
+        return "adddog";        
+    }
+    
+    try {
         dogRepository.save(dog);
-        return "redirect:/barkbuddy";
+    } catch (DataIntegrityViolationException e) {
+        bindingResult.rejectValue("regNum", "error.dog", "The registration number is already in use.");
+        model.addAttribute("dog", dog);
+        model.addAttribute("owners", ownerRepository.findAll());
+        model.addAttribute("breeds", breedService.findAllBreeds());
+        return "adddog";
+    }
+
+    return "redirect:/barkbuddy";
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")

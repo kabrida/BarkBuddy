@@ -32,11 +32,12 @@ public class Dog {
     private Breed breed;
 
     @Column(name="reg_num", nullable = false, unique = true)
-    @NotNull(message = "Registration numner is required")
+    @NotNull(message = "Registration number is required")
     private String regNum;
 
 
     @Column(name="dog_dob", nullable = false)
+    @NotNull(message = "Date of birth is required")
     @PastOrPresent(message = "Date of birth cannot be in the future")
     private LocalDate dateOfBirth;
 

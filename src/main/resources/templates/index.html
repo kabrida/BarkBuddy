@@ -3,17 +3,42 @@
 <head>
     <title>BarkBuddy - Welcome</title>
     <link rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div class="container text-center">
-        <h1>Welcome to BarkBuddy</h1>
-        <p>If you already have an account, please <strong>Login</strong>.</p>
-        <p>If you don't have an account yet, feel free to <strong>Sign Up</strong> to create one!</p>
+    <div class="container text-center mt-5">
+        <h1 class="display-4">Welcome to BarkBuddy</h1>
+        <p class="lead mt-3">Your ultimate companion in dog management. Join our community to make the best of your time with your pets!</p>
+        
+        <div class="my-4">
+            <a href="/login" class="btn btn-primary btn-lg mx-2">Login</a>
+            <a href="/signup" class="btn btn-secondary btn-lg mx-2">Sign Up</a>
+        </div>
+        
+        <div class="card border-info mb-3 mx-auto" style="width: 40rem;">
+            <div class="card-body">
+                <h2 class="card-title">Why BarkBuddy?</h2>
+                <p class="card-text">BarkBuddy is designed to simplify your life as a pet owner. From adding and viewing dog profiles to finding breed information, our platform offers everything you need to manage your furry friends’ details in one place.</p>
+            </div>
+        </div>
 
-        <div class="mt-4">
-            <a href="/login" class="btn btn-primary btn-lg">Login</a>
-            <a href="/signup" class="btn btn-secondary btn-lg ml-3">Sign Up</a>
+        <div class="mt-5">
+            <h2>Features at a Glance</h2>
+            <ul class="list-group list-group-flush text-left d-inline-block mt-3">
+                <li class="list-group-item"><strong>Add Dogs:</strong> Maintain a comprehensive profile for each dog.</li>
+                <li class="list-group-item"><strong>View Dogs:</strong> Access profiles to learn more about your and others’ pets.</li>
+                <li class="list-group-item"><strong>Breed Info:</strong> Get detailed breed information to support informed pet care.</li>
+                <li class="list-group-item"><strong>Manage Owners:</strong> Admins can edit owner information, ensuring up-to-date records.</li>
+            </ul>
+        </div>
     </div>
-    </div>
+
+    <footer class="bg-light py-3 mt-5">
+        <div class="container text-center">
+        <p>&copy; 2024 BarkBuddy - Built by Ida Kabris</p>
+        <p>Breed information provided by <a href="https://www.thedogapi.com/" target="_blank">TheDogAPI</a>.</p>
+        <p>Icon design by <a href="https://www.canva.com/p/id/BAD6OOtRqUo/" target="_blank">Roxy Designs</a> on Canva.</p>
+        </div>
+    </footer>
 </body>
 </html>

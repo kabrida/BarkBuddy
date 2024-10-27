@@ -5,6 +5,7 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <title>BarkBuddy</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <div class="container mt-5">
@@ -16,11 +17,14 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
                 <input type="text" id="name" th:field="*{name}" class="form-control form-control-sm" />
                 <div th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}">Error</div>
             </div>
+            <!-- KYSY MITEN TÄMÄN SAA TOIMIMAAN
+            <p>Dog's date of birth: <span th:text="${dog.dateOfBirth}"></span></p>
             <div class="mb-2">
                 <label for="dateOfBirth">Date of Birth</label>
-                <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" class="form-control form-control-sm" />
+                <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" class="form-control form-control-sm" required />
                 <div th:if="${#fields.hasErrors('dateOfBirth')}" class="text-danger" th:errors="*{dateOfBirth}">Error</div>
             </div>
+            -->
             <div class="mb-2">
                 <label for="regNum">Registration number</label>
                 <input type="text" id="regNum" th:field="*{regNum}" class="form-control form-control-sm" />
@@ -44,5 +48,13 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
             <a href="/barkbuddy" class="btn btn-secondary">Return</a>
         </form>
     </div>
+
+    <footer class="bg-light py-3 mt-5">
+        <div class="container text-center">
+        <p>&copy; 2024 BarkBuddy - Built by Ida Kabris</p>
+        <p>Breed information provided by <a href="https://www.thedogapi.com/" target="_blank">TheDogAPI</a>.</p>
+        <p>Icon design by <a href="https://www.canva.com/p/id/BAD6OOtRqUo/" target="_blank">Roxy Designs</a> on Canva.</p>
+        </div>
+    </footer>
 </body>
 </html>

@@ -5,11 +5,12 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
     <title>BarkBuddy - Owner Management</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">BarkBuddy</a>
+            <a class="navbar-brand" href="/home"><img src="images/paw-icon-192x192.png" alt="Paw Icon" width="24" height="24"> BarkBuddy</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -55,6 +56,14 @@ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
             <td th:text="${owner.role}"></td>
             <td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/owner/edit/{id}(id=${owner.id})}" class="btn btn-info">Edit</a></td>
         </tr>
-    </table> 	
+    </table> 
+    
+    <footer class="bg-light py-3 mt-5">
+        <div class="container text-center">
+        <p>&copy; 2024 BarkBuddy - Built by Ida Kabris</p>
+        <p>Breed information provided by <a href="https://www.thedogapi.com/" target="_blank">TheDogAPI</a>.</p>
+        <p>Icon design by <a href="https://www.canva.com/p/id/BAD6OOtRqUo/" target="_blank">Roxy Designs</a> on Canva.</p>
+        </div>
+    </footer>
 </body>
 </html>

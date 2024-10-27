@@ -18,8 +18,6 @@ import syksy2024.backend.web.UserDetailServiceImpl;
 @EnableWebSecurity
 public class BarkbuddySecurityConfig  {
 
-    @Autowired
-    private CustomLogoutSuccessHandler logoutSuccessHandler;
 
     @Autowired
     private UserDetailServiceImpl userDetailsService;
@@ -44,9 +42,9 @@ public class BarkbuddySecurityConfig  {
 				.defaultSuccessUrl("/home", true).permitAll()
 			)
             .logout(logout -> logout
-            .logoutSuccessHandler(logoutSuccessHandler)
-				.permitAll()
-			);
+            .logoutSuccessUrl("/index")
+            .permitAll()
+        );
 		return http.build();
 	}
 
