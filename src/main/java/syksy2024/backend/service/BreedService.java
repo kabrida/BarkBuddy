@@ -50,25 +50,18 @@ public class BreedService {
     }
 
     @PostConstruct
-    public void init() {
-        Breed[] breedsFromApi = findAllBreeds();
-        for (Breed breed : breedsFromApi) {
-            // Tarkista, onko breed jo olemassa tietokannassa
-            Breed existingBreed = breedRepository.findByName(breed.getName());
-            if (existingBreed == null) {
-                // Jos breed ei ole olemassa, tallenna se uutena
-                breedRepository.save(breed);
-            } else {
-                // Jos breed on jo olemassa, voit päivittää sen tiedot
-                existingBreed.setBredFor(breed.getBredFor());
-                existingBreed.setBreedGroup(breed.getBreedGroup());
-                existingBreed.setLifeSpan(breed.getLifeSpan());
-                existingBreed.setTemperament(breed.getTemperament());
-                existingBreed.setHeight(breed.getHeight());
-                existingBreed.setWeight(breed.getWeight());
-                // Päivitä myös muita kenttiä, jos tarpeen
-                breedRepository.save(existingBreed); // päivitä olemassa oleva
-            }
+public void init() {
+    Breed[] breedsFromApi = findAllBreeds();
+    for (Breed breed : breedsFromApi) {
+        // Tarkista, onko breed jo olemassa tietokannassa ID:n perusteella
+        if (breedRepository.existsById(breed.getId())) {
+            // Jos breed on jo olemassa, päivitä se
+            breedRepository.save(breed); // tämä päivittää olemassa olevan
+        } else {
+            // Jos breed ei ole olemassa, tallenna se uutena
+            breed.setId(breed.getId()); // Aseta API:n ID suoraan
+            breedRepository.save(breed);
         }
     }
+}
 }

@@ -21,7 +21,6 @@ import jakarta.persistence.Table;
 @Entity
 public class Breed {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "breed_name", nullable = false)
