@@ -18,10 +18,17 @@ INSERT INTO owner (username, password_hash, first_name, last_name, owner_dob, us
 
 CREATE TABLE breed (
     id BIGSERIAL PRIMARY KEY,
-    breed_name VARCHAR(100) NOT NULL
+    breed_name VARCHAR(100) NOT NULL,
+    bred_for VARCHAR(255),
+    breed_group VARCHAR(255),
+    life_span VARCHAR(50),
+    temperament VARCHAR(500),
+    origin VARCHAR(500),
+    weight_metric VARCHAR(50),
+    height_metric VARCHAR(50),
+    reference_image_id VARCHAR(255)
 );
 
-INSERT INTO breed (breed_name) VALUES ('Affenpinscher');
 
 CREATE TABLE dog (
     id BIGSERIAL PRIMARY KEY,
@@ -40,15 +47,3 @@ INSERT INTO dog (dog_name, breed_id, reg_num, dog_dob, owner_id) VALUES
 SELECT * FROM owner;
 SELECT * FROM breed;
 SELECT * FROM dog;
-
--- LISÄTÄÄN TIETOJA BREED TAULUUN
-
-ALTER TABLE breed
-ADD COLUMN bred_for VARCHAR(255),
-ADD COLUMN breed_group VARCHAR(255),
-ADD COLUMN life_span VARCHAR(50),
-ADD COLUMN temperament VARCHAR(500),
-ADD COLUMN origin VARCHAR(500),
-ADD COLUMN weight_metric VARCHAR(50),
-ADD COLUMN height_metric VARCHAR(50),
-ADD COLUMN reference_image_id VARCHAR(255);
