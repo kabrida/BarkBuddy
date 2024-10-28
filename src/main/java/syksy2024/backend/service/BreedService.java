@@ -2,6 +2,7 @@ package syksy2024.backend.service;
 
 
 
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -50,16 +51,17 @@ public class BreedService {
     }
 
     @PostConstruct
-public void init() {
+    public void init() {
     Breed[] breedsFromApi = findAllBreeds();
     for (Breed breed : breedsFromApi) {
-        // Tarkista, onko breed jo olemassa tietokannassa ID:n perusteella
-        if (breedRepository.existsById(breed.getId())) {
+        // Tarkista, onko breed jo olemassa tietokannassa breed_name:n perusteella
+        Optional<Breed> existingBreed = breedRepository.findByName(breed.getName());
+        if (existingBreed.isPresent()) {
             // Jos breed on jo olemassa, päivitä se
-            breedRepository.save(breed); // tämä päivittää olemassa olevan
+            breed.setId(existingBreed.get().getId()); // Aseta ID vanhasta breedistä
+            breedRepository.save(breed); // päivitä olemassa oleva
         } else {
             // Jos breed ei ole olemassa, tallenna se uutena
-            breed.setId(breed.getId()); // Aseta API:n ID suoraan
             breedRepository.save(breed);
         }
     }
