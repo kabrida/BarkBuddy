@@ -41,9 +41,3 @@ CREATE TABLE dog (
     FOREIGN KEY (owner_id) REFERENCES owner(id)
 );
 
-INSERT INTO dog (dog_name, breed_id, reg_num, dog_dob, owner_id) VALUES 
-('Possu', (SELECT id FROM breed WHERE breed_name = 'Affenpinscher'), 'FI123456', '2016-01-13', (SELECT id FROM owner WHERE username = 'owner1'));
-
-SELECT * FROM owner;
-SELECT * FROM breed;
-SELECT * FROM dog;
