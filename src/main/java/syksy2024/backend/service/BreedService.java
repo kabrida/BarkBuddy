@@ -25,7 +25,7 @@ public class BreedService {
     private String apiKey;
 
     @Autowired
-    private RestTemplate template = new RestTemplate();
+    private RestTemplate template;
 
     @Autowired
     private BreedRepository breedRepository;
@@ -52,18 +52,18 @@ public class BreedService {
 
     @PostConstruct
     public void init() {
-    Breed[] breedsFromApi = findAllBreeds();
-    for (Breed breed : breedsFromApi) {
-        // Tarkista, onko breed jo olemassa tietokannassa breed_name:n perusteella
-        Optional<Breed> existingBreed = breedRepository.findByName(breed.getName());
-        if (existingBreed.isPresent()) {
-            // Jos breed on jo olemassa, päivitä se
-            breed.setId(existingBreed.get().getId()); // Aseta ID vanhasta breedistä
-            breedRepository.save(breed); // päivitä olemassa oleva
-        } else {
-            // Jos breed ei ole olemassa, tallenna se uutena
-            breedRepository.save(breed);
+        Breed[] breedsFromApi = findAllBreeds();
+        for (Breed breed : breedsFromApi) {
+            Optional<Breed> existingBreed = breedRepository.findByName(breed.getName());
+            if (existingBreed.isPresent()) {
+                // Aseta ID vanhasta breedistä
+                breed.setId(existingBreed.get().getId());
+                // Päivitä olemassa oleva rodun tietoja
+                breedRepository.save(breed);
+            } else {
+                // Tallenna uusi rotu
+                breedRepository.save(breed);
+            }
         }
     }
-}
 }
