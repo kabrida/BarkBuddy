@@ -54,7 +54,7 @@ public class BreedService {
         Breed[] breedsFromApi = findAllBreeds();
         for (Breed breed : breedsFromApi) {
             // Tarkista, onko breed jo olemassa tietokannassa
-            if (breedRepository.existsById(breed.getId())) {
+            if (breedRepository.findByName(breed.getName()) == null) {
                 // Jos breed on jo olemassa, päivitä se
                 breedRepository.save(breed); // tämä päivittää olemassa olevan
             } else {

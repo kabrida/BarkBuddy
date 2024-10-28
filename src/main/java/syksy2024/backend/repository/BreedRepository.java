@@ -7,4 +7,6 @@ import syksy2024.backend.model.Breed;
 
 public interface BreedRepository extends CrudRepository <Breed, Long> {
 
+    Breed findByName(String name);
+
 }
